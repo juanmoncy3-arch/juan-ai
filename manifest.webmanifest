@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "JUAN AI \u2013 Personal Learning Hub",
+  "short_name": "JUAN AI",
+  "description": "Your personal learning hub for German, IELTS, DMAT and career skills.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#14263d",
+  "theme_color": "#14263d",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

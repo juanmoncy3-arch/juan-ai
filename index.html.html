@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#14263d">
+<title>JUAN AI – Personal Learning Hub</title>
+<style>
+:root{--navy:#14263d;--navy2:#203a58;--gold:#e6c77a;--bg:#f4f6fa;--card:#fff;--ink:#182536;--muted:#68778b;--line:#e4e9f0;--green:#16845b;--blue:#3b70bd}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(130deg,var(--navy),var(--navy2));color:white;padding:22px max(18px,calc((100vw - 1050px)/2)) 18px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:#ffffff18;border:1px solid #ffffff35;display:grid;place-items:center;color:var(--gold);font-size:24px}
+h1{font-size:23px;margin:0;letter-spacing:.4px}header p{margin:2px 0 0;color:#d4deeb;font-size:13px}
+main{max-width:1050px;margin:auto;padding:18px 16px 92px}.welcome{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 18px}.welcome h2{margin:0;font-size:21px}.muted{color:var(--muted);font-size:13px}
+.pill{background:#e8f4ee;color:#176c4d;padding:5px 10px;border-radius:30px;font-size:12px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 3px 12px #18253608}
+.stat{font-size:25px;font-weight:750}.statlabel{font-size:12px;color:var(--muted)}
+.section{margin-top:18px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.sectionhead h3{margin:0;font-size:16px}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.action{background:white;border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:left;cursor:pointer;color:var(--ink);font:inherit}.action b{display:block;margin-top:5px;font-size:13px}.emoji{font-size:22px}
+button,.btn{border:0;border-radius:10px;background:var(--navy);color:white;padding:10px 14px;font:600 13px inherit;cursor:pointer;text-decoration:none;display:inline-block}button.secondary,.btn.secondary{background:#edf1f6;color:var(--navy)}button.danger{background:#fff0f0;color:#a52b2b}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);display:flex;justify-content:center;gap:4px;padding:8px;overflow:auto}
+nav button{background:transparent;color:var(--muted);white-space:nowrap;padding:9px 12px}nav button.active{background:#edf1f6;color:var(--navy)}
+.view{display:none}.view.active{display:block}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{display:flex;justify-content:space-between;align-items:center;gap:10px}
+input,select,textarea{width:100%;border:1px solid #d9e0e9;border-radius:10px;padding:11px;background:white;color:var(--ink);font:inherit}
+label{font-size:12px;font-weight:700;color:#526174;display:block;margin:10px 0 5px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
+.task{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.task input{width:auto;margin-top:5px}.task.done .tasktitle{text-decoration:line-through;color:#8994a3}
+.tag{font-size:11px;border-radius:20px;padding:3px 8px;background:#eef2f7;color:#536277}
+.resource{padding:12px 0;border-bottom:1px solid var(--line)}.resource:last-child{border:0}.resource a{color:#245e9e;font-weight:650;text-decoration:none}
+.progress{height:9px;border-radius:20px;background:#e9edf2;overflow:hidden}.progress span{display:block;height:100%;background:var(--green);width:0}
+.material{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}.material small{color:var(--muted)}
+.note{background:#fff8e8;border:1px solid #f0dfb4;color:#745c20;padding:12px;border-radius:12px;font-size:12px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}.actions{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.welcome{align-items:flex-start;flex-direction:column}}
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+</head>
+<body>
+<header><div class="brand"><div class="logo">✦</div><div><h1>JUAN AI</h1><p>Your personal learning & career companion</p></div></div></header>
+<nav id="nav">
+<button class="active" data-view="home">Home</button><button data-view="planner">Planner & reminders</button><button data-view="materials">My materials</button><button data-view="academy">Free academy</button><button data-view="assistant">AI assistant</button>
+</nav>
+<main>
+<section id="home" class="view active">
+<div class="welcome"><div><h2>Welcome back, Juan 👋</h2><div class="muted">Small steps every day. Build your future.</div></div><span class="pill">A1 German · IELTS 7.0</span></div>
+<div class="grid">
+<div class="card"><div class="stat" id="todayCount">0</div><div class="statlabel">Today's activities</div></div>
+<div class="card"><div class="stat" id="doneCount">0</div><div class="statlabel">Completed activities</div></div>
+<div class="card"><div class="stat">3–4h</div><div class="statlabel">Daily study target</div></div>
+<div class="card"><div class="stat" id="materialCount">0</div><div class="statlabel">Saved materials</div></div>
+</div>
+<div class="section"><div class="sectionhead"><h3>Quick access</h3></div><div class="actions">
+<button class="action" onclick="show('planner')"><span class="emoji">⏰</span><b>Set a reminder</b></button>
+<button class="action" onclick="show('materials')"><span class="emoji">📚</span><b>Add study material</b></button>
+<button class="action" onclick="show('academy')"><span class="emoji">🎓</span><b>Free courses</b></button>
+<button class="action" onclick="show('assistant')"><span class="emoji">🤖</span><b>Ask JUAN AI</b></button>
+</div></div>
+<div class="section card"><div class="sectionhead"><h3>Today's study plan</h3><button class="secondary" onclick="show('planner')">Manage</button></div><div id="todayTasks" class="muted">No activities yet. Add your first activity in Planner.</div></div>
+<div class="section card"><div class="sectionhead"><h3>Weekly progress</h3><span class="muted" id="progressLabel">0% complete</span></div><div class="progress"><span id="progressBar"></span></div><p class="muted">Tick off activities in your planner to track your progress.</p></div>
+</section>
+
+<section id="planner" class="view">
+<div class="welcome"><div><h2>Planner & reminders</h2><div class="muted">Create activities and set browser reminders.</div></div></div>
+<div class="card">
+<h3 style="margin-top:0">Add an activity</h3>
+<form id="taskForm"><div class="formgrid">
+<div class="full"><label>Activity name</label><input id="taskTitle" required placeholder="e.g. German A1 vocabulary revision"></div>
+<div><label>Learning area</label><select id="taskCategory"><option>German</option><option>DMAT</option><option>IELTS</option><option>BBA</option><option>Software training</option><option>Career</option><option>Business</option><option>Other</option></select></div>
+<div><label>Date</label><input id="taskDate" type="date" required></div>
+<div><label>Time</label><input id="taskTime" type="time" required></div>
+<div><label>Duration (minutes)</label><input id="taskDuration" type="number" min="5" max="480" value="45"></div>
+<div class="full"><label>Notes (optional)</label><textarea id="taskNotes" rows="2" placeholder="Topic, chapter or goal"></textarea></div>
+</div><p class="muted">Allow notifications when your browser asks. Reminder alerts work while this page remains open.</p><button type="submit">＋ Save activity & reminder</button></form>
+</div>
+<div class="section card"><div class="sectionhead"><h3>My activities</h3><button class="secondary" onclick="clearCompleted()">Clear completed</button></div><div id="taskList"></div></div>
+<div class="note section">Reminder limitation: this starter app can show browser notifications while it is open. It cannot reliably alert you after the browser is closed. For dependable background reminders, add each important activity to Google Calendar or your phone's Clock app.</div>
+</section>
+
+<section id="materials" class="view">
+<div class="welcome"><div><h2>My study materials</h2><div class="muted">Keep your notes, pictures, PDFs and videos organised.</div></div></div>
+<div class="card"><h3 style="margin-top:0">Add files from this device</h3>
+<label>Choose category</label><select id="fileCategory"><option>German</option><option>DMAT</option><option>IELTS</option><option>BBA</option><option>Software training</option><option>Career</option><option>Other</option></select>
+<label>Select notes, images, audio or videos</label><input id="fileInput" type="file" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.webp,.mp3,.mp4,.m4v,.webm">
+<p class="muted">Files are saved in this browser on this device. Large video files may exceed your browser's available storage.</p>
+<button onclick="saveFiles()">Save selected files</button>
+</div>
+<div class="section card"><div class="sectionhead"><h3>Saved materials</h3><span class="muted" id="storageHint">Device storage</span></div><div id="fileList" class="muted">No files saved yet.</div></div>
+<div class="section card"><h3 style="margin-top:0">Cloud library option</h3><p class="muted">For access from both your phone and laptop, keep your master copies in Google Drive and paste shared links into a note or your AI chat. Free Google accounts include up to 15 GB shared across Drive, Gmail and Photos.</p><a class="btn" href="https://drive.google.com/" target="_blank" rel="noopener">Open Google Drive ↗</a></div>
+</section>
+
+<section id="academy" class="view">
+<div class="welcome"><div><h2>Free learning academy</h2><div class="muted">Official resources and legal free software options.</div></div></div>
+<div class="card">
+<div class="resource"><b>🇩🇪 German – Deutsche Welle</b><p class="muted">Nicos Weg and beginner German learning materials.</p><a href="https://learngerman.dw.com/" target="_blank" rel="noopener">Open German course ↗</a></div>
+<div class="resource"><b>📝 IELTS – British Council</b><p class="muted">Official free member resources and practice for all four skills.</p><a href="https://takeielts.britishcouncil.org/prepare" target="_blank" rel="noopener">IELTS Ready ↗</a></div>
+<div class="resource"><b>📊 Excel – Microsoft Learn</b><p class="muted">Official self-paced Microsoft training. Excel desktop may require a licence; practise with free spreadsheet alternatives too.</p><a href="https://learn.microsoft.com/en-us/training/browse/?products=office-excel" target="_blank" rel="noopener">Explore Excel training ↗</a></div>
+<div class="resource"><b>📈 Power BI – Microsoft Learn</b><p class="muted">Power BI Desktop is free for Windows; some cloud sharing features are paid.</p><a href="https://learn.microsoft.com/en-us/training/powerplatform/power-bi" target="_blank" rel="noopener">Free Power BI learning ↗</a> · <a href="https://learn.microsoft.com/en-us/power-bi/fundamentals/desktop-get-the-desktop" target="_blank" rel="noopener">Desktop download ↗</a></div>
+<div class="resource"><b>🧮 SQL – SQLBolt</b><p class="muted">Interactive SQL lessons and browser exercises.</p><a href="https://sqlbolt.com/" target="_blank" rel="noopener">Start SQLBolt ↗</a></div>
+<div class="resource"><b>🐍 Python & data – Kaggle Learn</b><p class="muted">Free hands-on Python, pandas, SQL and machine-learning courses.</p><a href="https://www.kaggle.com/learn" target="_blank" rel="noopener">Explore Kaggle Learn ↗</a></div>
+<div class="resource"><b>🏭 SAP – Student Edition</b><p class="muted">Free SAP Learning Hub student edition for eligible, actively enrolled university students after verification.</p><a href="https://learning.sap.com/free-student-edition" target="_blank" rel="noopener">Check eligibility ↗</a></div>
+<div class="resource"><b>🗂️ Free office suite – LibreOffice</b><p class="muted">Free, open-source desktop office suite including spreadsheets and presentations.</p><a href="https://www.libreoffice.org/download/download-libreoffice/" target="_blank" rel="noopener">Download LibreOffice ↗</a></div>
+</div>
+</section>
+
+<section id="assistant" class="view">
+<div class="welcome"><div><h2>Ask JUAN AI</h2><div class="muted">Copy a ready-made prompt into ChatGPT to start a focused lesson.</div></div></div>
+<div class="card">
+<label>Choose a learning assistant</label><select id="promptType">
+<option value="Teach me German A1. Give me a short lesson, vocabulary, examples, pronunciation guidance and a 5-question quiz. Correct my mistakes.">German A1 tutor</option>
+<option value="Act as my IELTS Academic coach. My target overall band is 7.0. Give me one focused exercise for Listening, Reading, Writing or Speaking and assess my response using IELTS criteria.">IELTS band 7 coach</option>
+<option value="Act as my management entrance aptitude tutor. Teach one topic in quantitative aptitude, logical reasoning, verbal ability or data interpretation, then give practice questions. First ask me which exact DMAT exam and syllabus I follow.">DMAT preparation coach</option>
+<option value="Teach me Excel, SQL, Power BI, Python or SAP from beginner level using free tools. Give step-by-step instructions and a practical supply-chain exercise.">Software trainer</option>
+<option value="Help me study the uploaded notes or material. Explain the content simply, make revision notes, create flashcards and quiz me. Ask me to attach the material if needed.">Study material tutor</option>
+<option value="Act as my supply-chain career mentor. Help me build skills for supply-chain analytics, SAP, procurement and digital transformation roles in Germany.">Career mentor</option>
+</select>
+<p class="muted">The AI conversation opens in ChatGPT. AI usage is subject to your ChatGPT plan and limits.</p>
+<button onclick="copyPrompt()">Copy lesson prompt</button> <a class="btn secondary" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT ↗</a>
+<div id="copyStatus" class="muted" style="margin-top:8px"></div>
+</div>
+<div class="section note">To study your own files with AI, upload them into a ChatGPT conversation or Google NotebookLM. This prototype does not automatically send your private files to an AI service.</div>
+</section>
+<footer>JUAN AI · Personal learning hub · Your data stays in this browser unless you choose to share it.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const KEY='juan_ai_tasks_v1', DB='juan_ai_materials', STORE='files';
+let tasks=JSON.parse(localStorage.getItem(KEY)||'[]');
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(id==='materials')renderFiles();if(id==='planner')renderTasks();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
+$('taskDate').value=new Date().toISOString().slice(0,10);
+function saveTasks(){localStorage.setItem(KEY,JSON.stringify(tasks));renderTasks();renderHome()}
+function renderTasks(){let el=$('taskList');if(!tasks.length){el.innerHTML='<p class="muted">No activities yet. Add one above.</p>';return}
+el.innerHTML=tasks.slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).map(t=>`<div class="task ${t.done?'done':''}"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}')"><div style="flex:1"><div class="tasktitle"><b>${esc(t.title)}</b> <span class="tag">${esc(t.category)}</span></div><small>${esc(t.date)} · ${esc(t.time)} · ${t.duration} min</small>${t.notes?`<div class="muted">${esc(t.notes)}</div>`:''}</div><button class="danger" onclick="deleteTask('${t.id}')">Delete</button></div>`).join('')}
+function renderHome(){let today=new Date().toISOString().slice(0,10),tod=tasks.filter(t=>t.date===today);$('todayCount').textContent=tod.length;$('doneCount').textContent=tasks.filter(t=>t.done).length;$('todayTasks').innerHTML=tod.length?tod.map(t=>`<div class="task ${t.done?'done':''}"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}')"><div><b class="tasktitle">${esc(t.title)}</b><div class="muted">${esc(t.time)} · ${esc(t.category)}</div></div></div>`).join(''):'No activities scheduled for today.';let week=tasks.filter(t=>{let d=new Date(t.date+'T00:00:00'),now=new Date();let diff=(d-now)/(86400000);return diff>=-6&&diff<=1});let pct=week.length?Math.round(week.filter(t=>t.done).length/week.length*100):0;$('progressLabel').textContent=pct+'% complete';$('progressBar').style.width=pct+'%'}
+function toggleTask(id){let t=tasks.find(x=>x.id===id);if(t)t.done=!t.done;saveTasks()}
+function deleteTask(id){tasks=tasks.filter(x=>x.id!==id);saveTasks()}
+function clearCompleted(){tasks=tasks.filter(x=>!x.done);saveTasks()}
+$('taskForm').addEventListener('submit',async e=>{e.preventDefault();let t={id:Date.now().toString(),title:$('taskTitle').value.trim(),category:$('taskCategory').value,date:$('taskDate').value,time:$('taskTime').value,duration:$('taskDuration').value,notes:$('taskNotes').value,done:false};tasks.push(t);saveTasks();e.target.reset();$('taskDate').value=new Date().toISOString().slice(0,10);if('Notification'in window&&Notification.permission==='default'){try{await Notification.requestPermission()}catch(e){}}scheduleNotice(t);alert('Activity saved in this browser. Keep JUAN AI open for its reminder notification.');});
+function scheduleNotice(t){let at=new Date(t.date+'T'+t.time).getTime(),delay=at-Date.now();if(delay>0&&delay<2147480000){setTimeout(()=>{if('Notification'in window&&Notification.permission==='granted')new Notification('JUAN AI reminder',{body:t.title+' · '+t.category});else alert('JUAN AI reminder: '+t.title)},delay)}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function openDB(){return new Promise((res,rej)=>{let r=indexedDB.open(DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(STORE,{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function saveFiles(){let fs=[...$('fileInput').files];if(!fs.length){alert('Choose at least one file first.');return}try{let db=await openDB(),tx=db.transaction(STORE,'readwrite'),st=tx.objectStore(STORE);for(let f of fs)st.put({id:crypto.randomUUID?crypto.randomUUID():Date.now()+Math.random(),name:f.name,type:f.type||'file',size:f.size,category:$('fileCategory').value,blob:f,added:new Date().toLocaleDateString()});tx.oncomplete=()=>{db.close();$('fileInput').value='';renderFiles();alert('Files saved in this browser.')};tx.onerror=()=>{db.close();alert('Could not save files. Try smaller files or use Google Drive.')};}catch(e){alert('Browser storage is unavailable. Use Google Drive for this file.')}} 
+async function renderFiles(){try{let db=await openDB(),tx=db.transaction(STORE,'readonly'),req=tx.objectStore(STORE).getAll();req.onsuccess=()=>{let a=req.result;$('materialCount').textContent=a.length;$('fileList').innerHTML=a.length?a.map(f=>`<div class="material"><div><b>${esc(f.name)}</b><br><small>${esc(f.category)} · ${(f.size/1048576).toFixed(2)} MB · ${esc(f.added)}</small></div><div class="row"><button class="secondary" onclick="downloadFile('${f.id}')">Open</button><button class="danger" onclick="removeFile('${f.id}')">Delete</button></div></div>`).join(''):'No files saved yet.';db.close()}}catch(e){$('fileList').textContent='Local file storage is not available in this browser.'}}
+async function downloadFile(id){let db=await openDB(),tx=db.transaction(STORE,'readonly'),r=tx.objectStore(STORE).get(id);r.onsuccess=()=>{let f=r.result;if(f){let u=URL.createObjectURL(f.blob),a=document.createElement('a');a.href=u;a.download=f.name;a.click();setTimeout(()=>URL.revokeObjectURL(u),5000)}db.close()}}
+async function removeFile(id){let db=await openDB(),tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete(id);tx.oncomplete=()=>{db.close();renderFiles()}}
+function copyPrompt(){let p=$('promptType').value;navigator.clipboard.writeText(p).then(()=>$('copyStatus').textContent='Prompt copied. Open ChatGPT and paste it into a new chat.').catch(()=>$('copyStatus').textContent=p)}
+renderTasks();renderHome();renderFiles();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch((err) => {
+      console.error("Service worker registration failed:", err);
+    });
+  });
+}
+</script>
+
+</body></html>
